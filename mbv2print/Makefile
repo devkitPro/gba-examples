@@ -69,7 +69,7 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
 export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
 
-export CC		:=	$(PREFIX)gcc -v
+export CC		:=	$(PREFIX)gcc 
 export CXX		:=	$(PREFIX)g++
 export AR		:=	$(PREFIX)ar
 export OBJCOPY	:=	$(PREFIX)objcopy
