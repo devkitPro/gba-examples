@@ -23,7 +23,8 @@ ARM		:=	-marm -mthumb-interwork
 
 ARCH	:=	$(THUMB)
 
-CFLAGS	:=	-g -Wall -O3\
+CFLAGS	:=	-g -Wall -O3
+			$(ARCH)\
 			-mcpu=arm7tdmi -mtune=arm7tdmi\
 			-fomit-frame-pointer\
 			-ffast-math
@@ -36,7 +37,7 @@ LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # path to tools - this can be deleted if you set the path in windows
 #---------------------------------------------------------------------------------
-export PATH		:=	/c/devkitARM_r8/bin:/bin
+export PATH		:=	/c/devkitARM_r11/bin:/bin
 #---------------------------------------------------------------------------------
 # absolute path required since this makefile uses the build directory
 # as the working directory
@@ -142,7 +143,7 @@ $(OUTPUT).elf	:	$(OFILES) $(LIBGBA)/lib/libgba.a
 #---------------------------------------------------------------------------------
 %_mb.elf:
 	@echo linking multiboot
-	@$(LD) -specs=gba_mb.specs $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@
+	$(LD) -specs=gba_mb.specs $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@
 
 #---------------------------------------------------------------------------------
 %.elf:
