@@ -192,6 +192,7 @@ $(OUTPUT).elf	:	$(OFILES)
 #---------------------------------------------------------------------------------
 define bin2o
 	cp $(<) $(*).tmp
+	alignbin $(*).tmp
 	$(OBJCOPY) -I binary -O elf32-littlearm -B arm \
 	--rename-section .data=.rodata,readonly,data,contents,alloc \
 	--redefine-sym _binary_$*_tmp_start=$*\
@@ -208,7 +209,7 @@ endef
 %.o	:	%.pcx
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
-	@$(bin2o)
+	$(bin2o)
 
 -include $(DEPENDS)
 
