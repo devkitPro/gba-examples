@@ -44,12 +44,12 @@ LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # path to tools - this can be deleted if you set the path in windows
 #---------------------------------------------------------------------------------
-export PATH		:=	/c/devkitARM_r8/bin:/bin
+export PATH		:=	/c/devkitARM_r11/bin:/bin
 #---------------------------------------------------------------------------------
 # absolute path required since this makefile uses the build directory
 # as the working directory
 #---------------------------------------------------------------------------------
-LIBGBA	:=	/c/projects/gba/libgba
+LIBGBA	:=	/c/projects/devkitpro/libgba
 
 #---------------------------------------------------------------------------------
 # the prefix on the compiler executables
@@ -197,7 +197,7 @@ define bin2o
 	--rename-section .data=.rodata,readonly,data,contents,alloc \
 	--redefine-sym _binary_$*_tmp_start=$*\
 	--redefine-sym _binary_$*_tmp_end=$*_end\
-	--redefine-sym _binary_$*_tmp_size=$*_size\
+	--redefine-sym _binary_$*_tmp_size=$*_len\
 	$(*).tmp $(@)
 	echo "extern const u8" $(*)"[];" > $(*).h
 	echo "extern const u32" $(*)_len[]";" >> $(*).h
