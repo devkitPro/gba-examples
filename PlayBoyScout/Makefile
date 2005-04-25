@@ -17,7 +17,7 @@
 # INCLUDES	- a list of directories containing extra header files
 #				should include the build directory
 #---------------------------------------------------------------------------------
-TARGET		:=	PlayBoyScout_mb
+TARGET		:=	PlayBoyScout
 BUILD		:=	build
 SOURCES		:=	source data
 INCLUDES	:=	$(BUILD)
@@ -32,11 +32,11 @@ ARM		:=	-marm -mthumb-interwork
 
 ARCH	:=	$(THUMB)
 
-CFLAGS	:=	-save-temps -g -Wall -O3\
+CFLAGS	:=	-g -Wall -O0\
 			-mcpu=arm7tdmi -mtune=arm7tdmi\
  			-fomit-frame-pointer\
-			-ffast-math
-
+			-ffast-math \
+			-ffunction-sections
 CFLAGS	+=	$(INCLUDE)
 
 ASFLAGS	:=	$(ARCH)
@@ -44,29 +44,31 @@ ASFLAGS	:=	$(ARCH)
 LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $@).map -Wl,--gc-sections
 
 #---------------------------------------------------------------------------------
-# path to tools - this can be deleted if you set the path in windows
-#---------------------------------------------------------------------------------
-export PATH		:=	/c/devkitARM_r11/bin:/bin
-#---------------------------------------------------------------------------------
 # absolute path required since this makefile uses the build directory
 # as the working directory
 #---------------------------------------------------------------------------------
 LIBGBA	:=	/c/projects/devkitpro/libgba
-
-#---------------------------------------------------------------------------------
-# the prefix on the compiler executables
-#---------------------------------------------------------------------------------
-PREFIX			:=	arm-elf-
-#---------------------------------------------------------------------------------
-# any extra libraries we wish to link with the project
-#---------------------------------------------------------------------------------
-LIBS	:=	-lgba
-
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
 LIBDIRS	:=	$(LIBGBA)
+#---------------------------------------------------------------------------------
+# any extra libraries we wish to link with the project
+#---------------------------------------------------------------------------------
+LIBS	:=	-lgba
+
+
+#---------------------------------------------------------------------------------
+# path to tools - this can be deleted if you set the path in windows
+#---------------------------------------------------------------------------------
+export PATH		:=	$(DEVKITARM):$(PATH)
+
+#---------------------------------------------------------------------------------
+# the prefix on the compiler executables
+#---------------------------------------------------------------------------------
+PREFIX			:=	arm-elf-
+
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -203,13 +205,13 @@ define bin2o
 	alignbin $(*).tmp
 	$(OBJCOPY) -I binary -O elf32-littlearm -B arm \
 	--rename-section .data=.rodata,readonly,data,contents,alloc \
-	--redefine-sym _binary_$*_tmp_start=$*\
-	--redefine-sym _binary_$*_tmp_end=$*_end\
-	--redefine-sym _binary_$*_tmp_size=$*_len\
+	--redefine-sym _binary_`(echo $(*) | tr . _)`_tmp_start=`(echo $(*) | tr . _)`\
+	--redefine-sym _binary_`(echo $(*) | tr . _)`_tmp_end=`(echo $(*) | tr . _)`_end\
+	--redefine-sym _binary_`(echo $(*) | tr . _)`_tmp_size=`(echo $(*) | tr . _)`_size\
 	$(*).tmp $(@)
-	echo "extern const u8" $(*)"[];" > $(*).h
-	echo "extern const u32" $(*)_len[]";" >> $(*).h
-	echo "#define" $(*)_size "(u32)" $(*)_len >> $(*).h
+	echo "extern const u32" `(echo $(*) | tr . _)`"_end[];" >> $(*).h
+	echo "extern const u8" `(echo $(*) | tr . _)`"[];" >> $(*).h
+	echo "extern const u32" `(echo $(*) | tr . _)`_size[]";" >> $(*).h
 	rm $(*).tmp
 endef
 
