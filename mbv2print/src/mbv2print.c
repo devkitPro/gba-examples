@@ -7,9 +7,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gba_systemcalls.h"
+
+
+// for Xboo Communicator use xcomms.h
+// for vba/mappy use mappy.h
+
 #include "mbv2.h"
-
-
 
 //---------------------------------------------------------------------------------
 // Program entry point

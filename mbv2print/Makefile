@@ -143,7 +143,7 @@ $(OUTPUT).elf	:	$(OFILES) $(LIBGBA)/lib/libgba.a
 #---------------------------------------------------------------------------------
 %_mb.elf:
 	@echo linking multiboot
-	$(LD) -specs=gba_mb.specs $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@
+	@$(LD) -specs=gba_mb.specs $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@
 
 #---------------------------------------------------------------------------------
 %.elf:
