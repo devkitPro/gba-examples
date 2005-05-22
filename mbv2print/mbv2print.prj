@@ -74,7 +74,7 @@ Open File Line13=0
 Open File Window Pos13=0,1,-1,-1,-4,-23,22,22,738,259
 Open File14=
 [File View]
-Current Select=Project Files\
+Current Select=Project Files\source\src\mbv2print.c
 Scroll Position=0
 [Files]
 0=Makefile

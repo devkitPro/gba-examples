@@ -1,74 +1,52 @@
 #---------------------------------------------------------------------------------
-# Generic makefile for GBA projects
-#
-# Tab stops set to 4
-#	|	|	|	|
-#	0	1	2	3
-#---------------------------------------------------------------------------------
 # Clear the implicit built in rules
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
+-include $(DEVKITARM)/gba_rules
 
 #---------------------------------------------------------------------------------
-# TARGET	- the name of the output, if this ends with _mb generates a multiboot image
-# BUILD		- the directory where object files & intermediate files will be placed
-# SOURCES	- a list of directories containing source code
-# INCLUDES	- a list of directories containing extra header files
-#				should include the build directory
+# TARGET is the name of the output, if this ends with _mb generates a multiboot image
+# BUILD is the directory where object files & intermediate files will be placed
+# SOURCES is a list of directories containing source code
+# INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	PlayBoyScout
+TARGET		:=	PlayBoyScout_mb
 BUILD		:=	build
 SOURCES		:=	source data
-INCLUDES	:=	$(BUILD)
-
-EMULATOR	:=	/c/emulation/GameBoyAdvance/emulators/nocashdebug/nocash
+INCLUDES	:=
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-THUMB	:=	-mthumb -mthumb-interwork
-ARM		:=	-marm -mthumb-interwork
+ARCH	:=	-mthumb -mthumb-interwork
 
-ARCH	:=	$(THUMB)
-
-CFLAGS	:=	-g -Wall -O0\
+CFLAGS	:=	-g -Wall -O3\
 			-mcpu=arm7tdmi -mtune=arm7tdmi\
  			-fomit-frame-pointer\
 			-ffast-math \
-			-ffunction-sections
+			$(ARCH)
+
 CFLAGS	+=	$(INCLUDE)
 
 ASFLAGS	:=	$(ARCH)
+LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $@).map
 
-LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $@).map -Wl,--gc-sections
+#---------------------------------------------------------------------------------
+# path to tools - this can be deleted if you set the path in windows
+#---------------------------------------------------------------------------------
+export PATH		:=	$(DEVKITARM)/bin:$(PATH)
 
-#---------------------------------------------------------------------------------
-# absolute path required since this makefile uses the build directory
-# as the working directory
-#---------------------------------------------------------------------------------
-LIBGBA	:=	/c/projects/devkitpro/libgba
-#---------------------------------------------------------------------------------
-# list of directories containing libraries, this must be the top level containing
-# include and lib
-#---------------------------------------------------------------------------------
-LIBDIRS	:=	$(LIBGBA)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
 LIBS	:=	-lgba
 
-
 #---------------------------------------------------------------------------------
-# path to tools - this can be deleted if you set the path in windows
+# list of directories containing libraries, this must be the top level containing
+# include and lib
 #---------------------------------------------------------------------------------
-export PATH		:=	$(DEVKITARM):$(PATH)
-
-#---------------------------------------------------------------------------------
-# the prefix on the compiler executables
-#---------------------------------------------------------------------------------
-PREFIX			:=	arm-elf-
-
+LIBDIRS	:=	$(LIBGBA)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -80,12 +58,8 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
 export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
-
-export CC		:=	$(PREFIX)gcc
-export CXX		:=	$(PREFIX)g++
-export AR		:=	$(PREFIX)ar
-export OBJCOPY	:=	$(PREFIX)objcopy
-
+export PATH	:=	$(DEVKITARM)/bin:$(PATH)
+export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
 # automatically build a list of object files for our project
@@ -96,27 +70,28 @@ SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 PCXFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.pcx)))
 BGFFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.bgf)))
 
-export OFILES	:=	$(PCXFILES:.pcx=.o) $(BGFFILES:.bgf=.o) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
-
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
 #---------------------------------------------------------------------------------
 ifeq ($(strip $(CPPFILES)),)
-
+#---------------------------------------------------------------------------------
 	export LD	:=	$(CC)
-
+#---------------------------------------------------------------------------------
 else
-
+#---------------------------------------------------------------------------------
 	export LD	:=	$(CXX)
-
+#---------------------------------------------------------------------------------
 endif
+#---------------------------------------------------------------------------------
+
+export OFILES	:= $(PCXFILES:.pcx=.o) $(BGFFILES:.bgf=.o) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
 
 #---------------------------------------------------------------------------------
 # build a list of include paths
 #---------------------------------------------------------------------------------
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-			-I$(CURDIR)/$(BUILD)
+					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+					-I$(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
 # build a list of library paths
@@ -128,17 +103,12 @@ export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@make -C $(LIBGBA)
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
 	@rm -fr $(BUILD) *.elf
-
-#---------------------------------------------------------------------------------
-run:
-	$(EMULATOR) $(OUTPUT).elf
 
 #---------------------------------------------------------------------------------
 else
@@ -152,78 +122,11 @@ $(OUTPUT).gba	:	$(OUTPUT).elf
 
 $(OUTPUT).elf	:	$(OFILES) $(LIBGBA)/lib/libgba.a
 
-#---------------------------------------------------------------------------------
-%.gba: %.elf
-	@echo built ... $(notdir $@)
-	@$(OBJCOPY) -O binary $< $@
-	@gbafix $@
-
-#---------------------------------------------------------------------------------
-%_mb.elf:
-	@echo linking multiboot
-	@$(LD) -specs=gba_mb.specs $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@
-
-#---------------------------------------------------------------------------------
-%.elf:
-	@echo linking cartridge
-	@$(LD)  $(LDFLAGS) -specs=gba.specs $(OFILES) $(LIBPATHS) $(LIBS) -o $@
-
-#---------------------------------------------------------------------------------
-# Compile Targets for C/C++
-#---------------------------------------------------------------------------------
-
-#---------------------------------------------------------------------------------
-%_arm.o : %_arm.cpp
-	@echo $(notdir $<)
-	@$(CXX) -MMD $(ARM) $(CFLAGS) -o $@ -c $<
-
-#---------------------------------------------------------------------------------
-%.o : %.cpp
-	@echo $(notdir $<)
-	@$(CXX) -MMD $(THUMB) $(CFLAGS) -o $@ -c $<
-
-#---------------------------------------------------------------------------------
-%_arm.o : %_arm.c
-	@echo $(notdir $<)
-	@$(CC) -MMD $(ARM) $(CFLAGS) -o $@ -c $<
-
-#---------------------------------------------------------------------------------
-%.o : %.c
-	@echo $(notdir $<)
-	@$(CC) -MMD $(THUMB) $(CFLAGS) -o $@ -c $< 2>&1 | sed s/"^\([a-zA-Z0-9_.: \\/]\+\):\([0-9]\+\):"/"\1(\2) :"/
-
-#---------------------------------------------------------------------------------
-%.o : %.s
-	@echo $(notdir $<)
-	@$(CC) -MMD $(ASFLAGS) -o $@ -c $<
-
-#---------------------------------------------------------------------------------
-# canned command sequence for binary data
-#---------------------------------------------------------------------------------
-define bin2o
-	cp $(<) $(*).tmp
-	alignbin $(*).tmp
-	$(OBJCOPY) -I binary -O elf32-littlearm -B arm \
-	--rename-section .data=.rodata,readonly,data,contents,alloc \
-	--redefine-sym _binary_`(echo $(*) | tr . _)`_tmp_start=`(echo $(*) | tr . _)`\
-	--redefine-sym _binary_`(echo $(*) | tr . _)`_tmp_end=`(echo $(*) | tr . _)`_end\
-	--redefine-sym _binary_`(echo $(*) | tr . _)`_tmp_size=`(echo $(*) | tr . _)`_size\
-	$(*).tmp $(@)
-	echo "extern const u32" `(echo $(*) | tr . _)`"_end[];" >> $(*).h
-	echo "extern const u8" `(echo $(*) | tr . _)`"[];" >> $(*).h
-	echo "extern const u32" `(echo $(*) | tr . _)`_size[]";" >> $(*).h
-	rm $(*).tmp
-endef
-
-#---------------------------------------------------------------------------------
 %.o	:	%.pcx
-#---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	@$(bin2o)
 
-#---------------------------------------------------------------------------------
 %.o	:	%.bgf
-#---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	@$(bin2o)
 

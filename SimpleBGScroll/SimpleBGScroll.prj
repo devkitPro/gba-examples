@@ -15,7 +15,7 @@ Include Sub Directories=0
 [Group]
 0=
 [Open Files]
-Open File0=C:\projects\mingw\gcc\devkitbuild\build-devkitPPC.sh
+Open File0=
 Open File Pos0=4615
 Open File Line0=4132
 Active File Index=0
@@ -45,7 +45,7 @@ Open File Pos6=2357
 Open File Line6=1770
 Open File Window Pos6=0,1,-1,-1,-4,-23,44,44,668,353
 Open File7=
-Active File Display Mode=3
+Active File Display Mode=-1
 [File View]
 Current Select=Project Files\Makefile
 Scroll Position=0
