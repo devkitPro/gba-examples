@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
--include $(DEVKITARM)/gba_rules
+include $(DEVKITARM)/gba_rules
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output, if this ends with _mb generates a multiboot image
