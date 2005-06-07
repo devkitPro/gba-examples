@@ -15,9 +15,9 @@ include $(DEVKITARM)/gba_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	mbv2print_mb
+TARGET		:=	sprite
 BUILD		:=	build
-SOURCES		:=	src data
+SOURCES		:=	source data
 INCLUDES	:=
 
 #---------------------------------------------------------------------------------
