@@ -17,7 +17,7 @@ include $(DEVKITARM)/gba_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	sprite
 BUILD		:=	build
-SOURCES		:=	source data
+SOURCES		:=	src data
 INCLUDES	:=
 
 #---------------------------------------------------------------------------------

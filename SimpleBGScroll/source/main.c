@@ -21,7 +21,7 @@
 #include "gba_systemcalls.h"
 #include "gba_interrupt.h"
 
-#include "r6502_portfont.h"
+#include "r6502_portfont_bin.h"
 
 // --------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ int main()
 	temppointer = (u16 *)VRAM;
 	for(i=0; i<(48*32); i++)
 	{
-		*temppointer++ = *((u16 *)r6502_portfont + i);
+		*temppointer++ = *((u16 *)r6502_portfont_bin + i);
 	}
 
 	// clear screen map with tile 0 ('space' tile) (256x256 halfwords)
