@@ -41,7 +41,7 @@ CFG=PCXView - Win32 Debug
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
-# PROP Cmd_Line "make -r"
+# PROP Cmd_Line "make -r 2>&1  | sed -e 's/:\([0-9]\+\):/(\1):/"
 # PROP Rebuild_Opt ""
 # PROP Target_File "PCXView.gba"
 # PROP Bsc_Name ""
@@ -62,7 +62,7 @@ CFG=PCXView - Win32 Debug
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
-# PROP Cmd_Line "make -r"
+# PROP Cmd_Line "make -r 2>&1  | sed -e 's/.[a-zA-Z]\+:\([0-9]\+\):/(\1):/"
 # PROP Rebuild_Opt ""
 # PROP Target_File "PCXView.gba"
 # PROP Bsc_Name ""
