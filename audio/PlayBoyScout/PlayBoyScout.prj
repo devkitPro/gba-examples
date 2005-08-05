@@ -1,0 +1,69 @@
+[Project ID]
+Signature=UE Proj: v.1
+[Project Information]
+Filter=*.*
+Project Directory=C:\projects\gba\DevkitSamples\PCXView\
+Use Relative Directory=1
+Relative to Project File=1
+Project Wordfile=
+Project Tagfile=
+Create Tagfile=0
+Include Sub Directories=0
+[Open Files]
+Open File0=
+Open File Pos0=617
+Open File Line0=1210
+Active File Index=3
+Open File Window Pos0=0,1,-1,-1,-4,-23,132,132,1001,505
+Open File1=C:\projects\devkitPro\libogc\libogc\dvd.c
+Open File Pos1=27406
+Open File Line1=27385
+Open File Window Pos1=0,1,-1,-1,-4,-23,154,154,1023,527
+Open File2=C:\projects\devkitPro\libogc\gc\ogc\dvd.h
+Active File Display Mode=-1
+Open File Pos2=1238
+Open File Line2=678
+Open File Window Pos2=0,1,-1,-1,-4,-23,0,0,869,373
+Open File3=C:\projects\devkitPro\examples\gba\PlayBoyScout\Makefile
+Open File Pos3=1446
+Open File Line3=846
+Open File Window Pos3=2,3,-1,-1,-4,-23,154,154,1019,523
+Open File4=C:\projects\devkitPro\examples\gba\PlayBoyScout\source\PlayBoyScout.c
+Open File Pos4=1266
+Open File Line4=0
+Open File Window Pos4=0,1,-1,-1,-4,-23,22,22,891,395
+Open File5=C:\projects\devkitPro\libgba\src\BoyScout\BoyScout.c
+Open File Pos5=14568
+Open File Line5=14361
+Open File Window Pos5=0,1,-1,-1,-4,-23,44,44,913,417
+Open File6=C:\projects\devkitPro\libgba\include\BoyScout.h
+Open File Pos6=0
+Open File Line6=2732
+Open File Window Pos6=0,1,-1,-1,-4,-23,88,88,957,461
+Open File7=C:\projects\devkitPro\libgba\Makefile
+Open File Pos7=357
+Open File Line7=0
+Open File Window Pos7=0,1,-1,-1,-4,-23,0,0,869,373
+Open File8=
+Open File Pos8=0
+Open File Line8=4222
+Open File Window Pos8=0,1,-1,-1,-4,-23,66,66,760,335
+Open File9=C:\projects\mingw\gcc\devkitbuild\newlib-1.12.0\newlib\libc\sys\arm\setjmp.S
+Open File Pos9=0
+Open File Line9=1839
+Open File Window Pos9=0,1,-1,-1,-4,-23,88,88,782,357
+Open File10=C:\projects\mingw\gcc\devkitbuild\newlib-1.12.0\libgloss\README
+Open File Pos10=0
+Open File Line10=0
+Open File Window Pos10=2,3,-1,-1,-4,-23,110,110,804,379
+Open File11=
+[File View]
+Current Select=Project Files
+Scroll Position=0
+[Group]
+0=source
+1=
+[Files - source]
+0=source\PlayBoyScout.c
+[Files]
+0=Makefile

@@ -1,0 +1,82 @@
+[Project ID]
+Signature=UE Proj: v.1
+[Project Information]
+Filter=*.*
+Project Directory=C:\projects\gba\test\PCXView\
+Use Relative Directory=1
+Relative to Project File=1
+Project Wordfile=
+Project Tagfile=
+Create Tagfile=0
+Include Sub Directories=0
+[Group]
+0=include
+1=source
+2=
+[Open Files]
+Open File0=
+Active File Display Mode=-1
+Open File Pos0=804
+Open File Line0=0
+Open File Window Pos0=0,1,-1,-1,-4,-23,88,88,961,528
+Open File1=C:\devkitPro\devkitARM\arm-elf\lib\gba_crt0.s
+Open File Pos1=9281
+Open File Line1=0
+Open File Window Pos1=0,1,-1,-1,-4,-23,110,110,987,554
+Open File2=C:\devkitPro\devkitARM\arm-elf\lib\gba_mb.ld
+Open File Pos2=1847
+Open File Line2=0
+Open File Window Pos2=0,1,-1,-1,-4,-23,132,132,1009,576
+Open File3=C:\devkitPro\devkitARM\arm-elf\lib\gba_cart.ld
+Open File Pos3=8636
+Open File Line3=7043
+Open File Window Pos3=0,1,-1,-1,-4,-23,154,154,1031,598
+Open File4=C:\projects\devkitPro\examples\gba\XbooLoad\build\XbooLoad.elf.map
+Open File Pos4=51289
+Open File Line4=52511
+Open File Window Pos4=2,3,-1,-1,-4,-23,176,176,1053,620
+Open File5=C:\projects\devkitPro\examples\gba\XbooLoad\build\XbooLoad_mb.elf.map
+Open File Pos5=0
+Open File Line5=13515
+Active File Index=4
+Open File Window Pos5=0,1,-1,-1,-4,-23,198,198,1075,642
+Open File6=
+Open File Pos6=1575
+Open File Line6=1057
+Open File Window Pos6=0,1,-1,-1,-4,-23,22,22,738,259
+Open File7=C:\projects\mingw\gcc\devkitbuild\build-devkitARM.sh
+Open File Pos7=0
+Open File Line7=0
+Open File Window Pos7=0,1,-1,-1,-4,-23,110,110,826,347
+Open File8=C:\projects\mingw\gcc\devkitbuild\build-devkitARM2.sh
+Open File Pos8=0
+Open File Line8=3611
+Open File Window Pos8=0,1,-1,-1,-4,-23,0,0,716,237
+Open File9=C:\projects\mingw\gcc\devkitbuild\dka-scripts\build-crtls.sh
+Open File Pos9=673
+Open File Line9=258
+Open File Window Pos9=0,1,-1,-1,-4,-23,22,22,738,259
+Open File10=C:\DOCUME~1\DAVEM~1.NEU\LOCALS~1\Temp\Rar$DI03.398\Fras - Readme.txt
+Open File Pos10=0
+Open File Line10=1448
+Open File Window Pos10=0,1,-1,-1,-4,-23,88,88,804,325
+Open File11=C:\DOCUME~1\DAVEM~1.NEU\LOCALS~1\Temp\Rar$DI09.695\SoundVariables.s
+Open File Pos11=0
+Open File Line11=20657
+Open File Window Pos11=0,1,-1,-1,-4,-23,110,110,826,347
+Open File12=W:\gamecube\test\c\Makefile
+Open File Pos12=1597
+Open File Line12=670
+Open File Window Pos12=2,3,-1,-1,-4,-23,0,0,716,237
+Open File13=W:\gamecube\test\gclib\src\Makefile
+Open File Pos13=0
+Open File Line13=0
+Open File Window Pos13=0,1,-1,-1,-4,-23,22,22,738,259
+Open File14=
+[File View]
+Current Select=Project Files\Makefile
+Scroll Position=0
+[Files]
+0=Makefile
+[Files - source]
+0=src\XbooLoad.c

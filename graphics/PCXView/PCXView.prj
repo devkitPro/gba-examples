@@ -1,0 +1,69 @@
+[Project ID]
+Signature=UE Proj: v.1
+[Project Information]
+Filter=*.*
+Project Directory=C:\projects\gba\DevkitSamples\PCXView\
+Use Relative Directory=1
+Relative to Project File=1
+Project Wordfile=
+Project Tagfile=
+Create Tagfile=0
+Include Sub Directories=0
+[Open Files]
+Open File0=C:\projects\devkitPro\examples\gba\PCXView\Makefile
+Open File Pos0=0
+Open File Line0=0
+Active File Index=4
+Open File Window Pos0=0,1,-1,-1,-4,-23,22,22,918,397
+Open File1=C:\projects\devkitPro\buildscripts\dka-rules\base_rules
+Open File Pos1=1957
+Open File Line1=1118
+Open File Window Pos1=0,1,-1,-1,-4,-23,66,66,966,445
+Open File2=C:\projects\devkitPro\htdocs\index.orig.shtml
+Active File Display Mode=3
+Open File Pos2=1024
+Open File Line2=543
+Open File Window Pos2=0,1,-1,-1,-4,-23,88,88,988,467
+Open File3=C:\projects\devkitPro\htdocs\links.shtml
+Open File Pos3=1101
+Open File Line3=0
+Open File Window Pos3=0,1,-1,-1,-4,-23,110,110,1010,489
+Open File4=C:\DOCUME~1\DAVEMN~1.000\LOCALS~1\Temp\Rar$DI00.255\readme.txt
+Open File Pos4=0
+Open File Line4=0
+Open File Window Pos4=2,3,-1,-1,-4,-23,132,132,1032,511
+Open File5=
+Open File Pos5=32
+Open File Line5=0
+Open File Window Pos5=2,3,-1,-1,-4,-23,132,132,1009,576
+Open File6=C:\projects\devkitPro\buildscripts\dka-crtls\ds_cart_crt0.s
+Open File Pos6=1793
+Open File Line6=1450
+Open File Window Pos6=0,1,-1,-1,-4,-23,154,154,1031,598
+Open File7=C:\projects\devkitPro\buildscripts\dka-crtls\ds_arm9_crt0.s
+Open File Pos7=679
+Open File Line7=0
+Open File Window Pos7=0,1,-1,-1,-4,-23,176,176,1053,620
+Open File8=C:\projects\devkitPro\buildscripts\dka-crtls\ds_arm9.ld
+Open File Pos8=2954
+Open File Line8=2479
+Open File Window Pos8=0,1,-1,-1,-4,-23,198,198,1075,642
+Open File9=
+Open File Pos9=0
+Open File Line9=1839
+Open File Window Pos9=0,1,-1,-1,-4,-23,88,88,782,357
+Open File10=C:\projects\mingw\gcc\devkitbuild\newlib-1.12.0\libgloss\README
+Open File Pos10=0
+Open File Line10=0
+Open File Window Pos10=2,3,-1,-1,-4,-23,110,110,804,379
+Open File11=
+[File View]
+Current Select=Project Files\Makefile
+Scroll Position=0
+[Group]
+0=source
+1=
+[Files - source]
+0=src\pcx_view.c
+[Files]
+0=Makefile
