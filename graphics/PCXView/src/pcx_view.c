@@ -3,6 +3,7 @@
 // Suitable for a splash screen for a game
 //---------------------------------------------------------------------------------
 #include "gba_video.h"
+#include "gba_systemcalls.h"
 #include "gba_input.h"
 #include "gba_interrupt.h"
 #include "pcx.h"
@@ -39,10 +40,10 @@ int main(void)
 	// Set up the interrupt handlers
 	InitInterrupt();
 
-	SetInterrupt( Int_Vblank, VblankInterrupt);
+	SetInterrupt( IE_VBL, VblankInterrupt);
 
 	// Enable Vblank Interrupt to allow VblankIntrWait
-	EnableInterrupt(Int_Vblank);
+	EnableInterrupt(IE_VBL);
 
 	// Allow Interrupts
 	REG_IME = 1;

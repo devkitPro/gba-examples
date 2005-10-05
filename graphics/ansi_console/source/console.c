@@ -2,6 +2,7 @@
 #include <gba_console.h>
 #include <gba_video.h>
 #include <gba_interrupt.h>
+#include <gba_systemcalls.h>
 
 #include <stdio.h>
 
@@ -15,7 +16,7 @@ int main(void) {
 	// since the default dispatcher handles the bios flags no vblank handler
 	// is required
 	InitInterrupt();
-	EnableInterrupt(Int_Vblank);
+	EnableInterrupt(IE_VBL);
 	
 	// initialise the console
 	// setting NULL & 0 for the font address & size uses the default font

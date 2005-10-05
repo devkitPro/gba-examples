@@ -15,7 +15,7 @@ include $(DEVKITARM)/gba_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	PCXView_mb
+TARGET		:=	PCXView
 BUILD		:=	build
 SOURCES		:=	src data
 INCLUDES	:=
@@ -25,7 +25,7 @@ INCLUDES	:=
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O3\
+CFLAGS	:=	-g -Wall -O0\
 			-mcpu=arm7tdmi -mtune=arm7tdmi\
  			-fomit-frame-pointer\
 			-ffast-math \

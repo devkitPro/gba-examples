@@ -16,16 +16,16 @@
 //
 // --------------------------------------------------------------------
 
-#include "gba_base.h"
-#include "gba_video.h"
-#include "gba_systemcalls.h"
-#include "gba_interrupt.h"
+#include <gba_base.h>
+#include <gba_video.h>
+#include <gba_systemcalls.h>
+#include <gba_interrupt.h>
 
 #include "r6502_portfont_bin.h"
 
 // --------------------------------------------------------------------
 
-#define MAPADDRESS		0x0600F800	// our base map address
+#define MAPADDRESS		MAP_BASE_ADR(31)	// our base map address
 #define DELAY			2			// slow things down
 #define TILEWIDTH		8			// how much to scroll
 #define ROW				10			// what row to place text at
@@ -80,12 +80,11 @@ void updatescrolltext(u32 idx)
 }
 
 
-int main()
-{
+int main() {
 	// Set up the interrupt handlers
 	InitInterrupt();
 	// Enable Vblank Interrupt to allow VblankIntrWait
-	EnableInterrupt(Int_Vblank);
+	EnableInterrupt(IE_VBL);
 
 	// Allow Interrupts
 	REG_IME = 1;
@@ -96,27 +95,21 @@ int main()
 
 	// load the palette for the background, 7 colors
 	temppointer = BG_COLORS;
-	for(i=0; i<7; i++)
-	{
+	for(i=0; i<7; i++) {
 		*temppointer++ = palette[i];
 	}
 
 	// load the font into gba video mem (48 characters, 4bit tiles)
-	temppointer = (u16 *)VRAM;
-	for(i=0; i<(48*32); i++)
-	{
-		*temppointer++ = *((u16 *)r6502_portfont_bin + i);
-	}
 
+	CpuFastSet(r6502_portfont_bin, (u16*)VRAM,(r6502_portfont_bin_size/4) | COPY32);
+	
 	// clear screen map with tile 0 ('space' tile) (256x256 halfwords)
-	temppointer = (u16 *)MAPADDRESS + (ROW * 32);
-	for(i=0; i<(256*256)/2; i++)
-	{
-		*temppointer++ = 0x00;
-	}
+
+	*((u32 *)MAP_BASE_ADR(31)) =0;
+	CpuFastSet( MAP_BASE_ADR(31), MAP_BASE_ADR(31), FILL | COPY32 | (0x800/4));
 
 	// set screen H and V scroll positions
-	BG0HOFS = BG0VOFS = 0;
+	BG0HOFS = 0; BG0VOFS = 0;
 
 	// initialize our variables
 	scrollx = 0;
@@ -137,19 +130,16 @@ int main()
 	// screen mode & background to display
 	SetMode( MODE_0 | BG0_ON );
 
-	while(1)
-	{
+	while(1) {
 		VBlankIntrWait();
 
 		// check if we reached our delay
-		if(scrolldelay == DELAY)
-		{
+		if(scrolldelay == DELAY) {
 			// yes, the delay is complete, so let's reset it
 			scrolldelay = 0;
 
 			// check if we reached our scrollcount
-			if(scrollx == (TILEWIDTH-1))
-			{
+			if(scrollx == (TILEWIDTH-1)) {
 				// yes, we've scrolled enough, so let's reset the count
 				scrollx = 0;
 
