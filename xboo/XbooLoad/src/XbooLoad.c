@@ -2,12 +2,13 @@
 // GBA sample code for devkitARM - http://www.devkit.tk
 // demonstrates use of Xboo Communicator file server
 //---------------------------------------------------------------------------------
-#include "gba_video.h"
-#include "gba_interrupt.h"
-#include "pcx.h"
-#include "fade.h"
-#include "xcomms.h"
-#include "gba_input.h"
+#include <gba_video.h>
+#include <gba_interrupt.h>
+#include <gba_systemcalls.h>
+#include <pcx.h>
+#include <fade.h>
+#include <xcomms.h>
+#include <gba_input.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,10 +67,10 @@ int main(void)
 	// Set up the interrupt handlers
 	InitInterrupt();
 
-	SetInterrupt( Int_Vblank, VblankInterrupt);
+	SetInterrupt( IE_VBL, VblankInterrupt);
 
 	// Enable Vblank Interrupt to allow VblankIntrWait
-	EnableInterrupt(Int_Vblank);
+	EnableInterrupt(IE_VBL);
 
 	// Allow Interrupts
 	REG_IME = 1;

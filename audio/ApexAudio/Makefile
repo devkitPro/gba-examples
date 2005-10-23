@@ -21,6 +21,7 @@ BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	
 INCLUDES	:=
+AASDATA		:=	AAS_Data
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -55,10 +56,11 @@ LIBDIRS	:=	$(LIBGBA)
 #---------------------------------------------------------------------------------
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
-
-export OUTPUT	:=	$(CURDIR)/$(TARGET)
-export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
-					$(foreach dir,$(DATA),$(CURDIR)/$(dir))
+export TOPDIR	:=	$(CURDIR)
+export OUTPUT	:=	$(TOPDIR)/$(TARGET)
+export VPATH	:=	$(foreach dir,$(SOURCES),$(TOPDIR)/$(dir)) \
+					$(foreach dir,$(DATA),$(TOPDIR)/$(dir)) \
+					$(TOPDIR)/$(AAS_DATA)
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
@@ -69,7 +71,9 @@ CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
-
+AAS_FILES	:=	$(notdir $(wildcard $(AASDATA)/*.*))
+export AAS_DEPS	:=	$(foreach file,$(AAS_FILES),$(TOPDIR)/$(AASDATA)/$(file))
+export AAS_DIR	:=	$(shell echo $(CURDIR)/$(AASDATA) | sed -e 's/^\/\([a-zA-Z]\)\//\1:\//')
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
 #---------------------------------------------------------------------------------
@@ -123,8 +127,8 @@ $(OUTPUT).gba	:	$(OUTPUT).elf
 
 $(OUTPUT).elf	:	$(OFILES)
 
-AAS_Data.s:
-	conv2aas  ../AAS_Data
+AAS_Data.s: $(AAS_DEPS)
+	conv2aas $(AAS_DIR)
 	
 -include $(DEPENDS)
 

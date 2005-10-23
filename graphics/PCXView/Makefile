@@ -15,7 +15,7 @@ include $(DEVKITARM)/gba_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	PCXView
+TARGET		:=	PCXView_mb
 BUILD		:=	build
 SOURCES		:=	src data
 INCLUDES	:=
