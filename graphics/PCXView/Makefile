@@ -23,13 +23,13 @@ INCLUDES	:=
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-ARCH	:=	-mthumb -mthumb-interwork
+ARCH	:=	-mthumb-interwork
 
 CFLAGS	:=	-g -Wall -O0\
-			-mcpu=arm7tdmi -mtune=arm7tdmi\
- 			-fomit-frame-pointer\
-			-ffast-math \
-			$(ARCH)
+		-mcpu=arm7tdmi -mtune=arm7tdmi\
+ 		-fomit-frame-pointer\
+		-ffast-math \
+		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE)
 
