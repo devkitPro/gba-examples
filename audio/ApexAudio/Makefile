@@ -59,8 +59,8 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 export TOPDIR	:=	$(CURDIR)
 export OUTPUT	:=	$(TOPDIR)/$(TARGET)
 export VPATH	:=	$(foreach dir,$(SOURCES),$(TOPDIR)/$(dir)) \
-					$(foreach dir,$(DATA),$(TOPDIR)/$(dir)) \
-					$(TOPDIR)/$(AAS_DATA)
+			$(foreach dir,$(DATA),$(TOPDIR)/$(dir)) \
+			$(TOPDIR)/$(AAS_DATA)
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
@@ -71,9 +71,12 @@ CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
+
 AAS_FILES	:=	$(notdir $(wildcard $(AASDATA)/*.*))
+
 export AAS_DEPS	:=	$(foreach file,$(AAS_FILES),$(TOPDIR)/$(AASDATA)/$(file))
 export AAS_DIR	:=	$(shell echo $(CURDIR)/$(AASDATA) | sed -e 's/^\/\([a-zA-Z]\)\//\1:\//')
+
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
 #---------------------------------------------------------------------------------
