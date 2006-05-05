@@ -28,10 +28,10 @@ INCLUDES	:=
 ARCH	:=	-mthumb -mthumb-interwork
 
 CFLAGS	:=	-g -Wall -O3\
-			-mcpu=arm7tdmi -mtune=arm7tdmi\
- 			-fomit-frame-pointer\
-			-ffast-math \
-			$(ARCH)
+		-mcpu=arm7tdmi -mtune=arm7tdmi\
+ 		-fomit-frame-pointer\
+		-ffast-math \
+		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE)
 
@@ -43,7 +43,7 @@ LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # path to tools - this can be deleted if you set the path to the toolchain in windows
 #---------------------------------------------------------------------------------
-export PATH		:=	$(DEVKITARM)/bin:$(PATH)
+export PATH	:=	$(DEVKITARM)/bin:$(PATH)
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
@@ -65,7 +65,7 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
 export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
-					$(foreach dir,$(DATA),$(CURDIR)/$(dir))
+			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
@@ -97,8 +97,8 @@ export OFILES	:= $(addsuffix .o,$(BINFILES)) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o)
 # build a list of include paths
 #---------------------------------------------------------------------------------
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-					-I$(CURDIR)/$(BUILD)
+			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+			-I$(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
 # build a list of library paths
@@ -129,10 +129,6 @@ DEPENDS	:=	$(OFILES:.o=.d)
 $(OUTPUT).gba	:	$(OUTPUT).elf
 
 $(OUTPUT).elf	:	$(OFILES)
-
-%.o	:	%.pcx
-	@echo $(notdir $<)
-	@$(bin2o)
 
 -include $(DEPENDS)
 
