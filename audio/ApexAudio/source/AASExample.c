@@ -22,9 +22,9 @@ int main() {
 	SetInterrupt( IE_TIMER1, AAS_Timer1InterruptHandler);
 
 	// Initialise AAS
+	// AAS_SetConfig appears to set REG_IE to IE_TIMER1, requiring other interrupts to be enabled later.
 	AAS_SetConfig( AAS_CONFIG_MIX_32KHZ, AAS_CONFIG_CHANS_8, AAS_CONFIG_SPATIAL_STEREO, AAS_CONFIG_DYNAMIC_OFF );
 
-	// AAS_SetConfig appears to set REG_IE to IE_TIMER0, requiring other interrupts to be enabled later.
 
 	// the vblank interrupt must be enabled to use VBlankIntrWait
 	// no handler is required since the libgba dispatcher handles the bios flags 

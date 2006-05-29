@@ -4,7 +4,7 @@
 .SUFFIXES:
 #---------------------------------------------------------------------------------
 ifeq ($(strip $(DEVKITARM)),)
-$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>/devkitARM)
+$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM)
 endif
 
 include $(DEVKITARM)/gba_rules
@@ -20,38 +20,39 @@ TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	
-INCLUDES	:=
-AASDATA		:=	AAS_Data
-
-
-LIBAAS	:=	$(DEVKITPRO)/libAAS
+INCLUDES	:=	Krawall_Data
+KRAWALLDATA	:=	Krawall_Data
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O2\
-			-mcpu=arm7tdmi -mtune=arm7tdmi\
- 			-fomit-frame-pointer\
-			-ffast-math \
-			$(ARCH)
+CFLAGS	:=	-g -Wall -O3\
+		-mcpu=arm7tdmi -mtune=arm7tdmi\
+ 		-fomit-frame-pointer\
+		-ffast-math \
+		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE)
+
+CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions -fno-rtti -fnoexceptions
 
 ASFLAGS	:=	$(ARCH)
 LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $@).map
 
+export LIBKRAWALL	:=	$(DEVKITPRO)/Krawall
+
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lgba -lAAS
+LIBS	:=	-lgba -lkrawall
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	$(LIBGBA) $(LIBAAS)
+LIBDIRS	:=	$(LIBGBA) $(LIBKRAWALL)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -59,11 +60,10 @@ LIBDIRS	:=	$(LIBGBA) $(LIBAAS)
 #---------------------------------------------------------------------------------
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
-export TOPDIR	:=	$(CURDIR)
-export OUTPUT	:=	$(TOPDIR)/$(TARGET)
-export VPATH	:=	$(foreach dir,$(SOURCES),$(TOPDIR)/$(dir)) \
-			$(foreach dir,$(DATA),$(TOPDIR)/$(dir)) \
-			$(TOPDIR)/$(AAS_DATA)
+
+export OUTPUT	:=	$(CURDIR)/$(TARGET)
+export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
+			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
@@ -75,10 +75,7 @@ CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
 
-AAS_FILES	:=	$(notdir $(wildcard $(AASDATA)/*.*))
-
-export AAS_DEPS	:=	$(foreach file,$(AAS_FILES),$(TOPDIR)/$(AASDATA)/$(file))
-export AAS_DIR	:=	$(CURDIR)/$(AASDATA)
+KRAWALLOBJ	:=	$(CURDIR)/$(KRAWALLDATA)/modules.o
 
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
@@ -94,37 +91,42 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-export OFILES	:= AAS_Data.o $(addsuffix .o,$(BINFILES)) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+export OFILES	:=  $(KRAWALLOBJ) \
+					$(addsuffix .o,$(BINFILES)) \
+					$(CPPFILES:.cpp=.o) \
+					$(CFILES:.c=.o) \
+					$(SFILES:.s=.o)
 
 #---------------------------------------------------------------------------------
 # build a list of include paths
 #---------------------------------------------------------------------------------
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-					-I$(CURDIR)/$(BUILD)
+			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+			-I$(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
 # build a list of library paths
 #---------------------------------------------------------------------------------
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
-#---------------------------------------------------------------------------------
-# Add path to conv2aas
-#---------------------------------------------------------------------------------
-export PATH	:=	$(PATH):$(LIBAAS)/bin
+export PATH	:=	$(PATH):$(LIBKRAWALL)/bin
 
-.PHONY: $(BUILD) clean
+.PHONY: $(BUILD) $(KRAWALLOBJ) clean
 
 #---------------------------------------------------------------------------------
-$(BUILD):
+$(BUILD): $(KRAWALLOBJ)
 	@[ -d $@ ] || mkdir -p $@
-	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 all	: $(BUILD)
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
+	$(MAKE) -C $(KRAWALLDATA) clean
 	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba
+
+$(KRAWALLOBJ):
+	$(MAKE) -C $(KRAWALLDATA)
 
 #---------------------------------------------------------------------------------
 else
@@ -138,9 +140,7 @@ $(OUTPUT).gba	:	$(OUTPUT).elf
 
 $(OUTPUT).elf	:	$(OFILES)
 
-AAS_Data.s: $(AAS_DEPS)
-	conv2aas $(AAS_DIR)
-	
+
 -include $(DEPENDS)
 
 #---------------------------------------------------------------------------------

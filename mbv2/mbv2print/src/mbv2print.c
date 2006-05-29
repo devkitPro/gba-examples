@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------------
-// GBA sample code for devkitARM - http://www.devkit.tk
+// GBA sample code for devkitARM - http://www.devkitpro.org
 // mbv2 hello world
 //
 // mb -s mbv2print_mb.gba -w 25 -x 150 -c
