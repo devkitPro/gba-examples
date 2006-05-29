@@ -13,4 +13,4 @@ install:
 	@for i in $(SUBDIRS); do if test -e $$i/Makefile ; then make  -C $$i install; fi; done;
 
 dist: clean
-	@tar --exclude=*CVS* -cvjf gba-examples-$(DATESTRING).tar.bz2 *
+	@tar --exclude=*CVS* --exclude=*.pnps -cvjf gba-examples-$(DATESTRING).tar.bz2 *
