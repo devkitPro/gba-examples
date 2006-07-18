@@ -26,7 +26,7 @@ void VblankInterrupt()
 //---------------------------------------------------------------------------------
 {
 	frame += 1;
-	ScanKeys();
+	scanKeys();
 }
 
 //---------------------------------------------------------------------------------
@@ -65,12 +65,12 @@ int main(void)
 
 
 	// Set up the interrupt handlers
-	InitInterrupt();
+	irqInit();
 
-	SetInterrupt( IE_VBL, VblankInterrupt);
+	irqSet( IRQ_VBLANK, VblankInterrupt);
 
 	// Enable Vblank Interrupt to allow VblankIntrWait
-	EnableInterrupt(IE_VBL);
+	irqEnable(IRQ_VBLANK);
 
 	// Allow Interrupts
 	REG_IME = 1;
@@ -86,7 +86,7 @@ int main(void)
 	{
 		VBlankIntrWait();
 
-		u16 keys = KeysDown();
+		u16 keys = keysDown();
 
 		if (keys & KEY_A)
 		{

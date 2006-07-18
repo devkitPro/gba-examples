@@ -81,9 +81,9 @@ void updatescrolltext(u32 idx)
 
 int main() {
 	// Set up the interrupt handlers
-	InitInterrupt();
+	irqInit();
 	// Enable Vblank Interrupt to allow VblankIntrWait
-	EnableInterrupt(IE_VBL);
+	irqEnable(IRQ_VBLANK);
 
 	// Allow Interrupts
 	REG_IME = 1;
@@ -101,14 +101,14 @@ int main() {
 	// load the font into gba video mem (48 characters, 4bit tiles)
 
 	CpuFastSet(r6502_portfont_bin, (u16*)VRAM,(r6502_portfont_bin_size/4) | COPY32);
-	
+
 	// clear screen map with tile 0 ('space' tile) (256x256 halfwords)
 
 	*((u32 *)MAP_BASE_ADR(31)) =0;
 	CpuFastSet( MAP_BASE_ADR(31), MAP_BASE_ADR(31), FILL | COPY32 | (0x800/4));
 
 	// set screen H and V scroll positions
-	BG0HOFS = 0; BG0VOFS = 0;
+	BG_OFFSET[0].x = 0; BG_OFFSET[0].y = 0;
 
 	// initialize our variables
 	scrollx = 0;
@@ -155,8 +155,7 @@ int main() {
 		else scrolldelay++;
 
 		// update the hardware horizontal scroll register
-		BG0HOFS = scrollx;
+		BG_OFFSET[0].x = scrollx;
 	}
 
-	return (0);	// we'll never reach here
 }

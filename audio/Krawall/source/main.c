@@ -14,19 +14,19 @@ void Vblank() {
 int main() {
 
 	// Initialise the interrupt handlers
-	InitInterrupt();
+	irqInit();
 
 	// Install the krawall timer1 interrupt
-	SetInterrupt( IE_TIMER1, kradInterrupt);
-	SetInterrupt( IE_VBL, Vblank );
+	irqSet( IRQ_TIMER1, kradInterrupt);
+	irqSet( IRQ_VBLANK, Vblank );
 
 	kragInit( KRAG_INIT_STEREO );					// init krawall
 	krapPlay( &mod_secondpm, KRAP_MODE_LOOP, 0 );	// play module
 
 
 	// the vblank interrupt must be enabled to use VBlankIntrWait
-	// no handler is required since the libgba dispatcher handles the bios flags 
-	EnableInterrupt(IE_TIMER1 | IE_VBL);
+	// no handler is required since the libgba dispatcher handles the bios flags
+	irqEnable(IRQ_TIMER1 | IRQ_VBLANK);
 	REG_IME = 1;
 
 	// initialise the console
@@ -40,12 +40,12 @@ int main() {
 					15		/* 16 color palette */);
 
 	// set the screen colors, color 0 is the background color
-	// the foreground color is index 1 of the selected 16 color palette 
+	// the foreground color is index 1 of the selected 16 color palette
 	BG_COLORS[0]=RGB8(58,110,165);
 	BG_COLORS[241]=RGB5(31,31,31);
 
 	SetMode(MODE_0 | BG0_ON);
-	
+
 	// ansi escape sequence to clear screen and home cursor
 	// /x1b[line;columnH
 	iprintf("\x1b[2J");
@@ -59,14 +59,14 @@ int main() {
 
 	while(1) {
 		VBlankIntrWait();
-		ScanKeys();
-		
-		int keys_pressed = KeysDown();
-		
+		scanKeys();
+
+		int keys_pressed = keysDown();
+
 		if ( keys_pressed & KEY_A ) {
 			kramPlay( samples[ SAMPLE_MECH_THRACK ], 1, 0 );
 		}
-		
+
 		if ( keys_pressed & KEY_B ) {
 			kramPlay( samples[ SAMPLE_MECH_KLACK ], 1, 0 );
 		}
@@ -84,7 +84,7 @@ int main() {
 
 
 	}
-	
+
 
 	return 0;
 }

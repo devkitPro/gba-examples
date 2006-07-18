@@ -38,7 +38,7 @@ int main(void)
 {
 
 	// Set up the interrupt handlers
-	InitInterrupt();
+	irqInit();
 
 	unsigned int nBSSongSize;
 	// Initialize BoyScout
@@ -56,10 +56,10 @@ int main(void)
 	// Play song and loop
 	BoyScoutPlaySong(1);
 
-	SetInterrupt( IE_VBL, VblankInterrupt);
+	irqSet( IRQ_VBLANK, VblankInterrupt);
 
 	// Enable Vblank Interrupt to allow VblankIntrWait
-	EnableInterrupt(IE_VBL);
+	irqEnable(IRQ_VBLANK);
 	// Allow Interrupts
 	REG_IME = 1;
 
