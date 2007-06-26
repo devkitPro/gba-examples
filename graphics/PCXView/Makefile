@@ -13,11 +13,13 @@ include $(DEVKITARM)/gba_rules
 # TARGET is the name of the output, if this ends with _mb generates a multiboot image
 # BUILD is the directory where object files & intermediate files will be placed
 # SOURCES is a list of directories containing source code
+# DATA is a list of directories containing binary data
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
 TARGET		:=	PCXView_mb
 BUILD		:=	build
-SOURCES		:=	src data
+SOURCES		:=	source
+DATA		:=	data
 INCLUDES	:=
 
 #---------------------------------------------------------------------------------
@@ -61,7 +63,8 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
-export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
+export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
+					$(foreach dir,$(DATA),$(CURDIR)/$(dir))
 export PATH	:=	$(DEVKITARM)/bin:$(PATH)
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
@@ -71,7 +74,7 @@ export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
-PCXFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.pcx)))
+BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
 
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
@@ -87,7 +90,7 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-export OFILES	:= $(PCXFILES:.pcx=.o) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+export OFILES	:= $(addsuffix .o,$(BINFILES)) $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
 
 #---------------------------------------------------------------------------------
 # build a list of include paths
@@ -126,7 +129,7 @@ $(OUTPUT).gba	:	$(OUTPUT).elf
 
 $(OUTPUT).elf	:	$(OFILES)
 
-%.o	:	%.pcx
+%.pcx.o	:	%.pcx
 	@echo $(notdir $<)
 	@$(bin2o)
 
