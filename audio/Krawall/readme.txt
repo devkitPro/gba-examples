@@ -57,3 +57,9 @@ libkrawall.a and libkrawall30.a are krawall.lib and krawall30.lib renamed
 to the standard gcc libary naming scheme. This makes it easier to link in
 a standard way.
 
+The latest devkitARM toolchain needs krawall rebuilt in order to link but
+until Sebastian gets around to doing it the change-eabi scripts provide
+an interim solution.
+
+http://www.devkitpro.org/downloads/change-eabi-scripts/
+
