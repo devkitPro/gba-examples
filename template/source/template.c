@@ -9,6 +9,7 @@
 
 int frame = 0;
 
+extern u8 zbuffer[240][160] EWRAM_BSS;
 void Vblank() {
 
 	frame++;
