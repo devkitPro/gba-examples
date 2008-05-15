@@ -16,7 +16,7 @@ include $(DEVKITARM)/gba_rules
 # DATA is a list of directories containing binary data
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	PCXView_mb
+TARGET		:=	PCXView
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
