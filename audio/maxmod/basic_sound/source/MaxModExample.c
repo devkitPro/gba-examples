@@ -22,23 +22,7 @@ int main() {
 	irqSet( IRQ_VBLANK, mmVBlank );
 	irqEnable(IRQ_VBLANK);
 
-	// initialise the console
-	// setting NULL & 0 for the font address & size uses the default font
-	// The font should be a complete 1bit 8x8 ASCII font
-	consoleInit(	0,		// charbase
-					4,		// mapbase
-					0,		// background number
-					NULL,	// font
-					0, 		// font size
-					15		// 16 color palette
-	);
-
-	// set the screen colors, color 0 is the background color
-	// the foreground color is index 1 of the selected 16 color palette
-	BG_COLORS[0]=RGB8(58,110,165);
-	BG_COLORS[241]=RGB5(31,31,31);
-
-	SetMode(MODE_0 | BG0_ON);
+	consoleDemoInit();
 
 	// ansi escape sequence to clear screen and home cursor
 	// /x1b[line;columnH
