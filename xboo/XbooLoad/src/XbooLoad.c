@@ -22,17 +22,8 @@ u16 PaletteBuffer[256];
 unsigned int frame = 0;
 
 //---------------------------------------------------------------------------------
-void VblankInterrupt()
+void LoadPic(void) {
 //---------------------------------------------------------------------------------
-{
-	frame += 1;
-	scanKeys();
-}
-
-//---------------------------------------------------------------------------------
-void LoadPic(void)
-//---------------------------------------------------------------------------------
-{
 	int handle = dfopen("data\\splash.pcx","rb");
 
 	dfseek(handle,0,SEEK_END);
@@ -59,15 +50,11 @@ void LoadPic(void)
 //---------------------------------------------------------------------------------
 // Program entry point
 //---------------------------------------------------------------------------------
-int main(void)
+int main(void) {
 //---------------------------------------------------------------------------------
-{
-
 
 	// Set up the interrupt handlers
 	irqInit();
-
-	irqSet( IRQ_VBLANK, VblankInterrupt);
 
 	// Enable Vblank Interrupt to allow VblankIntrWait
 	irqEnable(IRQ_VBLANK);
@@ -78,18 +65,14 @@ int main(void)
 	xcomms_init();
 
 	LoadPic();
-/*	handle = dfopen("data\\test.pcx","wb");
-	dfwrite(splash, 1, size, handle);
-	dfclose(handle);
-*/
-	while (1)
-	{
+
+	while (1) {
+
 		VBlankIntrWait();
 
 		u16 keys = keysDown();
 
-		if (keys & KEY_A)
-		{
+		if (keys & KEY_A) {
 			FadeToBlack(30);
 			LoadPic();
 		}

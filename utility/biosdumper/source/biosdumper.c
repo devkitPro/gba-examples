@@ -37,24 +37,7 @@ int main(void) {
 	irqInit();
 	irqEnable(IRQ_VBLANK);
 
-	// initialise the console
-	// setting NULL & 0 for the font address & size uses the default font
-	// The font should be a complete 1bit 8x8 ASCII font
-	consoleInit(	0,		// charbase
-					4,		// mapbase
-					0,		// background number
-					NULL,	// font
-					0, 		// font size
-					15		// 16 color palette
-				);
-
-	// RGB8 generates a 16 bit palette entry from 3 8bit components
-	BG_COLORS[0]=RGB8(58,110,165);
-
-	// RGB5 generates a 16 bit palette entry from 3 5bit components
-	BG_COLORS[241]=RGB5(31,31,31);
-
-	SetMode(MODE_0 | BG0_ON);
+	consoleDemoInit();
 
 	iprintf("GBA Bios Dumper\n\n");
 
