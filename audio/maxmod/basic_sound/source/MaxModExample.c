@@ -7,12 +7,6 @@
 #include "soundbank.h"
 #include "soundbank_bin.h"
 
-// Mixing buffer (globals should go in IWRAM)
-// Mixing buffer SHOULD be in IWRAM, otherwise the CPU load
-// will _drastially_ increase
-u8 myMixingBuffer[ MM_MIXLEN_16KHZ ] __attribute((aligned(4)));
-mm_gba_system   mySystem;
-
 int main() {
 
 	irqInit();
@@ -28,30 +22,8 @@ int main() {
 	// /x1b[line;columnH
 	iprintf("\x1b[2J");
 
-
-    u8* myData;
-
-    // allocate data for channels and wavebuffer (allocated data goes in EWRAM)
-    myData = (u8*)malloc( 8 * (MM_SIZEOF_MODCH
-                               +MM_SIZEOF_ACTCH
-                               +MM_SIZEOF_MIXCH)
-                               +MM_MIXLEN_16KHZ );
-    
-    // setup system info
-    mySystem.mixing_mode       = MM_MIX_16KHZ;
-    mySystem.mod_channel_count = 8;
-    mySystem.mix_channel_count = 8;
-    mySystem.module_channels   = (mm_addr)(myData+0);
-    mySystem.active_channels   = (mm_addr)(myData+(8*MM_SIZEOF_MODCH));
-    mySystem.mixing_channels   = (mm_addr)(myData+(8*(MM_SIZEOF_MODCH
-	                                             +MM_SIZEOF_ACTCH)));
-    mySystem.mixing_memory     = (mm_addr)myMixingBuffer;
-    mySystem.wave_memory       = (mm_addr)(myData+(8*(MM_SIZEOF_MODCH
-                                                     +MM_SIZEOF_ACTCH
-                                                     +MM_SIZEOF_MIXCH)));
-    mySystem.soundbank         = (mm_addr)soundbank_bin;
-
-    mmInit( &mySystem );
+	// initialise maxmod with soundbank and 8 channels
+    mmInitDefault( (mm_addr)soundbank_bin, 8 );
 
 	// Start playing module
 	mmStart( MOD_FLATOUTLIES, MM_PLAY_LOOP );
