@@ -4,6 +4,12 @@ In order to build this example a new directory called 'libAAS' was created
 in the devkitPro folder and the AAS files copied here in the following
 structure.
 
+Once you have obtained these files then delete these lines from the makefile.
+
+default:
+	@echo "This example requires files from the Apex Audio site."
+	@echo "Please see the readme.txt in this folder for details"
+
 davem@NEUROMANCER /e/devkitPro/libAAS
 $ ls -R -al
 .:

@@ -115,7 +115,12 @@ export PATH	:=	$(PATH):$(LIBAAS)/bin
 
 .PHONY: $(BUILD) clean
 
-#---------------------------------------------------------------------------------
+#------------ Cut these lines when you have the required files --------------------
+default:
+	@echo "This example requires files from the Apex Audio site."
+	@echo "Please see the readme.txt in this folder for details"
+#------------ Cut these lines when you have the required files --------------------
+
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
