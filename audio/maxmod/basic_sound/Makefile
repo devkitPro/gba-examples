@@ -20,11 +20,11 @@ include $(DEVKITARM)/gba_rules
 # the makefile is found
 #
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
-BUILD		:=	build
-SOURCES		:=	source
-INCLUDES	:=	include
-MUSIC       :=  maxmod_data
+TARGET		:= $(notdir $(CURDIR))
+BUILD		:= build
+SOURCES		:= source
+INCLUDES	:= include
+MUSIC		:=  maxmod_data
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -32,10 +32,10 @@ MUSIC       :=  maxmod_data
 ARCH	:=	-mthumb -mthumb-interwork
 
 CFLAGS	:=	-g -Wall -O3\
-			-mcpu=arm7tdmi -mtune=arm7tdmi\
- 			-fomit-frame-pointer\
-			-ffast-math \
-			$(ARCH)
+		-mcpu=arm7tdmi -mtune=arm7tdmi\
+ 		-fomit-frame-pointer\
+		-ffast-math \
+		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE)
 
@@ -114,7 +114,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).nds $(TARGET).arm9 
+	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba 
  
  
 #---------------------------------------------------------------------------------
