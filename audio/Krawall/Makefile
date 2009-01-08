@@ -113,7 +113,13 @@ export PATH	:=	$(PATH):$(LIBKRAWALL)/bin
 
 .PHONY: $(BUILD) $(KRAWALLOBJ) clean
 
-#---------------------------------------------------------------------------------
+#------------ Cut these lines when you have the required files --------------------
+default:
+	@echo "This example requires files from the Krawall site."
+	@echo "Please see the readme.txt in this folder for details"
+#------------ Cut these lines when you have the required files --------------------
+
+
 $(BUILD): $(KRAWALLOBJ)
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
