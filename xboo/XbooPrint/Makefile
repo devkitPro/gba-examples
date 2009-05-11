@@ -27,7 +27,7 @@ INCLUDES	:=
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork
 
-CFLAGS	:=	-g -save-temps -std=gnu99 -Wall -O3\
+CFLAGS	:=	-g -std=gnu99 -Wall -O3\
 			-mcpu=arm7tdmi -mtune=arm7tdmi\
  			-fomit-frame-pointer\
 			-ffast-math \
