@@ -6,9 +6,13 @@ Author: [Dave Murphy](https://github.com/WinterMute).
 
 ## Audio
 
-MaxMod Audio Demo: Plays a background music in loop. Press and hold button A to play an ambulance sound on left speaker. Press button B to play a boom sound on right speaker.
+MaxMod Audio Demo: plays a background music in loop. Press and hold button A to play an ambulance sound on left speaker. Press button B to play a boom sound on right speaker.
 
-PlayBoyScout
+![MaxMod Audio Demo](img/basic_sound.png)
+
+PlayBoyScout: displays a static background image and plays a song in loop.
+
+![PlayBoyScout](img/PlayBoyScout.png)
 
 ## Graphics
 
