@@ -1,21 +1,21 @@
 # gba-examples
 
-Gameboy Advance examples using libgba.
+Game Boy Advance examples using [libgba](https://github.com/devkitPro/libgba).
 
 Authors: Christer Andersson, r6502, [WinterMute](https://github.com/WinterMute)
 
 ## Audio
 
-`basic_sound.gba` plays a background music in loop. Press and hold button A to play an ambulance sound on left speaker. Press button B to play a boom sound on right speaker.
+`basic_sound.gba` plays a background music in a loop. Press and hold button A to play an ambulance sound on left speaker. Press button B to play a boom sound on right speaker.
 
 ![MaxMod Audio Demo](img/basic_sound.png)
 
 `PlayBoyScout.gba` displays a static background image and plays a song repeatedly.
 
-![PlayBoyScout](img/PlayBoyScout.png)
-
 > BoyScout was a PC Windows softwaresynth that emulated the GameBoy Advance sound chip. It let you compose your songs in Windows through a tracker style interface with seamless transfer to GameBoy Advance.
 [boyscout archive](http://web.archive.org/web/20170503190240/http://pidelipom.com/boyscout)
+
+![PlayBoyScout](img/PlayBoyScout.png)
 
 ## Graphics
 
