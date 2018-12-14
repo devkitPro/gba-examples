@@ -1,0 +1,26 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run binary in mgba",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "/usr/bin/mgba-qt",
+            "args": ["${workspaceFolder}/build/cmake_vscode.gba"],
+            "cwd": "${workspaceFolder}/build"
+         }, 
+         {
+            "name": "Run binary in vba",
+            "type": "cppdbg",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "/usr/bin/vba",
+            "args": ["${workspaceFolder}/build/cmake_vscode.gba", "-2", "--agb-print"],
+            "cwd": "${workspaceFolder}/build"
+         }
+    ]
+}

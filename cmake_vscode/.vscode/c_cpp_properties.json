@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**", 
+                "${workspaceFolder}/data/**",
+                "${env:DEVKITPRO}/libgba/include/**",
+                "${env:DEVKITARM}/arm-none-eabi/include/**",
+                "${env:DEVKITARM}/arm-none-eabi/include/c++/7.1.0/**",
+                "${env:DEVKITARM}/lib/gcc/arm-none-eabi/7.1.0/include/**"
+            ],
+            "defines": [],
+            "compilerPath": "${env:DEVKITARM}/bin/arm-none-eabi-g++",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
