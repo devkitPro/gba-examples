@@ -30,6 +30,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 ## To build from the command line
 
+Navigate to this examples folder, then:
 ```sh
 mkdir build && cd build
 cmake .. -DCMAKE_TOOLCHAIN_FILE=DevkitArmGBA.cmake
@@ -38,13 +39,16 @@ make -j 4
 
 ## To build from Visual Studio Code
 
-* Install the CMake extension ("CMake Tools" by "vector-of-bool") if you haven't yet. 
-* If you want intellisense install the ""
+* Must: Install the "C/C++ extension" by Microsoft.
+* Recommended: If you want intellisense functionality install the "C++ intellisense" extension by austin.
+* Must: Install the "CMake Tools" extension by vector-of-bool.
+* Restart / Reload Visual Studio Code if you have installed extensions.
+* Open this examples folder using "Open folder...".
 * Choose "Unspecified" as your active CMake kit if asked. It then should be autodetected correctly.
 * Make sure `.vscode/c_cpp_properties.json` contains the proper paths to your DevKitPro installation!
 * Make sure `.vscode/launch.json` points to a proper emulator on your system and your .gba executable!
-* Make sure `.vscode/tasks.json` points your .gba executable! (This seems a bit redundant, because CMake can build the binary just fine without it, but it is necessary for compiling on F5 to work. Currently the CMake extension build upon launch, but only the .elf will be generated! If this has been fixed or there's an easier way to do this, I'd love to hear it)
-* You should be able to build using F7 and build + run using F5.
+* Make sure `.vscode/tasks.json` points your .gba executable! (This seems a bit redundant, because CMake can build the binary just fine without it, but it is necessary for compiling on F5 to work. Currently the CMake extension builds upon launch, but only the .elf will be generated! If here's an easier way to do this, I'd love to hear it).
+* You should be able to build now using F7 and build + run using F5.
 
 # GBA CMake files
 
