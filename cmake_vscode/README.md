@@ -1,6 +1,6 @@
 # Example to develop for GBA using CMake and Visual Studio Code
 
-CMake scripts and VS Code files for GBA homebrew development. This was inspired by https://github.com/Lectem/3ds-cmake resp. its forks, especially https://github.com/Xtansia/3ds-cmake. 
+CMake scripts and VS Code files for GBA homebrew development. This was inspired by https://github.com/Lectem/3ds-cmake resp. its forks, especially https://github.com/Xtansia/3ds-cmake. See the MIT [LICENSE](LICENSE).
 
 # How to use this?
 
