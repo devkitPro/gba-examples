@@ -25,6 +25,7 @@ BUILD		:= build
 SOURCES		:= source
 INCLUDES	:= include
 DATA		:= data
+GRAPHICS	:= gfx
 MUSIC		:=
 
 #---------------------------------------------------------------------------------
@@ -78,6 +79,7 @@ CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
+PNGFILES	:=	$(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.png)))
 
 ifneq ($(strip $(MUSIC)),)
 	export AUDIOFILES	:=	$(foreach dir,$(notdir $(wildcard $(MUSIC)/*.*)),$(CURDIR)/$(MUSIC)/$(dir))
@@ -98,7 +100,7 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-export OFILES_BIN := $(addsuffix .o,$(BINFILES))
+export OFILES_BIN := $(addsuffix .o,$(BINFILES)) $(PNGFILES:.png=.o)
 
 export OFILES_SOURCES := $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
  
@@ -157,11 +159,14 @@ soundbank.bin soundbank.h : $(AUDIOFILES)
 	@$(bin2o)
 
 #---------------------------------------------------------------------------------
-%.pcx.o	%_pcx.h :	%.pcx
+# This rule creates assembly source files using grit
+# grit takes an image file and a .grit describing how the file is to be processed
+# add additional rules like this for each image extension
+# you use in the graphics folders
 #---------------------------------------------------------------------------------
-	@echo $(notdir $<)
-	@$(bin2o)
-
+%.s %.h   : %.png %.grit
+#---------------------------------------------------------------------------------
+	grit $< -fts -o$*.png
 
 -include $(DEPSDIR)/*.d
 
