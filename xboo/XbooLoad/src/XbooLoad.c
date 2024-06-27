@@ -5,13 +5,14 @@
 #include <gba_video.h>
 #include <gba_interrupt.h>
 #include <gba_systemcalls.h>
-#include <pcx.h>
 #include <fade.h>
 #include <xcomms.h>
 #include <gba_input.h>
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "pcx.h"
 
 //---------------------------------------------------------------------------------
 // storage space for palette data
